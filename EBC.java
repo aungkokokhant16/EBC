@@ -1,13 +1,15 @@
-package EBC;
+package Test;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class EBC extends JFrame implements ActionListener {
+public class test extends JFrame implements ActionListener {
 
     int unit;
     double charge,grandamount;
@@ -15,10 +17,10 @@ public class EBC extends JFrame implements ActionListener {
     JTextField txfName,txfAddress,txfMeterid,txfUnit,txfID;
     JTextArea jta = new JTextArea ();
     JScrollPane jsp;
-    JButton btnSave,btnUpdate,btnDelete,btnsShowlist;
+    JButton btnSave,btnCancel,btnExit,btnsShowlist;
     JPanel p1,p2;
 
-    public EBC(){
+    public test(){
         super("Electricity Unit Calculator");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -27,6 +29,7 @@ public class EBC extends JFrame implements ActionListener {
         p1 = new JPanel();
         p1.setBorder(BorderFactory.createTitledBorder("Electricity Bill Circulation"));
         p1.setBounds(10,10,390,250);
+        p1.setBackground(new Color(179,218,241));
         p1.setLayout(null);
 
         cusID = new JLabel("Customer ID");
@@ -83,29 +86,56 @@ public class EBC extends JFrame implements ActionListener {
         btnsShowlist.addActionListener(this);
         p1.add(btnsShowlist);
 
-        btnUpdate = new JButton("Update");
-        btnUpdate.setBounds(200,200,75,40);
+        btnCancel = new JButton("Cancel");
+        btnCancel.setBounds(200,200,75,40);
 //        btnUpdate.setMnemonic('U');
-        btnUpdate.addActionListener(this);
-        p1.add(btnUpdate);
+        btnCancel.addActionListener(this);
+        p1.add(btnCancel);
 
-        btnDelete = new JButton("Delete");
-        btnDelete.setBounds(290,200,75,40);
+        btnExit = new JButton("Exit");
+        btnExit.setBounds(290,200,75,40);
 //        btnDelete.setMnemonic('D');
-        btnDelete.addActionListener(this);
-        p1.add(btnDelete);
+        btnExit.addActionListener(this);
+        p1.add(btnExit);
 
 
         p2 = new JPanel();
         p2.setBorder(BorderFactory.createTitledBorder("Customer Information"));
         p2.setBounds(10,280,390,250);
         p2.setLayout(null);
-//        p2.setBackground(new Color(183,231,230));
+        p2.setBackground(new Color(203,203,203));
 
         jsp = new JScrollPane(jta);
         jsp.setBounds(10,20,350,200);
         p2.add(jsp);
 
+        txfID.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                txfIDKeyPressed(e);
+            }
+        });
+
+        txfMeterid.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                txfMeteridKeyPressed(e);
+            }
+        });
+
+        txfUnit.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                txfUnitKeyPressed(e);
+            }
+        });
+
+        txfName.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                txfNameKeyPressed(e);
+            }
+        });
 
 
 
@@ -119,6 +149,89 @@ public class EBC extends JFrame implements ActionListener {
         setResizable(false);
 
     }
+
+
+    private void txfIDKeyPressed(java.awt.event.KeyEvent e) {
+        // TODO add your handling code here:
+        String cusid = txfID.getText();
+        int length = cusid.length();
+        char c = e.getKeyChar();
+
+        //check for number 0 to 9
+        if(e.getKeyChar()>='0' && e.getKeyChar()<='9'){
+            if(length<10){
+                txfID.setEditable(true);
+            }else{
+                txfID.setEditable(false);
+            }
+        }else{
+            if(e.getExtendedKeyCode()== KeyEvent.VK_BACK_SPACE || e.getExtendedKeyCode()== KeyEvent.VK_DELETE){
+                txfID.setEditable(true);
+            }else{
+                txfID.setEditable(false);
+            }
+
+        }
+    }
+
+    private void txfMeteridKeyPressed(java.awt.event.KeyEvent e) {
+        // TODO add your handling code here:
+        String cusid = txfMeterid.getText();
+        int length = cusid.length();
+        char c = e.getKeyChar();
+
+        //check for number 0 to 9
+        if(e.getKeyChar()>='0' && e.getKeyChar()<='9'){
+            if(length<10){
+                txfMeterid.setEditable(true);
+            }else{
+                txfMeterid.setEditable(false);
+            }
+        }else{
+            if(e.getExtendedKeyCode()== KeyEvent.VK_BACK_SPACE || e.getExtendedKeyCode()== KeyEvent.VK_DELETE){
+                txfMeterid.setEditable(true);
+            }else{
+                txfMeterid.setEditable(false);
+            }
+
+        }
+    }
+
+    private void txfUnitKeyPressed(java.awt.event.KeyEvent e) {
+        // TODO add your handling code here:
+        String cusid = txfUnit.getText();
+        int length = cusid.length();
+        char c = e.getKeyChar();
+
+        //check for number 0 to 9
+        if(e.getKeyChar()>='0' && e.getKeyChar()<='9'){
+            if(length<10){
+                txfUnit.setEditable(true);
+            }else{
+                txfUnit.setEditable(false);
+            }
+        }else{
+            if(e.getExtendedKeyCode()== KeyEvent.VK_BACK_SPACE || e.getExtendedKeyCode()== KeyEvent.VK_DELETE ){
+                txfUnit.setEditable(true);
+            }else{
+                txfUnit.setEditable(false);
+            }
+
+        }
+    }
+
+    private void txfNameKeyPressed(java.awt.event.KeyEvent e) {
+        // TODO add your handling code here:
+        char c = e.getKeyChar();
+
+        if(Character.isLetter(c) || Character.isWhitespace(c) || Character.isISOControl(c)){
+            txfName.setEditable(true);
+
+        }else{
+            txfName.setEditable(false);
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -161,17 +274,23 @@ public class EBC extends JFrame implements ActionListener {
             showAllRecord ();
             return ;
         }
-        if (ae.getSource().equals(btnDelete))
+        if (ae.getSource().equals(btnCancel))
         {
             txfID.setText("");
             txfUnit.setText("");
             txfName.requestFocus(true);
+            txfName.setText("");
             txfMeterid.setText("");
-
             txfAddress.setText("");
-
             txfID.setText("");
+        }
+        if(ae.getSource().equals(btnExit))
+        {
+            int result = JOptionPane.showConfirmDialog(null,"Are You Sure Want To Exit?...","Confirm Exit",JOptionPane.OK_CANCEL_OPTION);
 
+            if(result == JOptionPane.OK_OPTION){
+                System.exit(0);
+            }
         }
 
 
@@ -180,7 +299,7 @@ public class EBC extends JFrame implements ActionListener {
 
     public void saveRecord()
     {
-         unit= Integer.parseInt(txfUnit.getText());
+        unit= Integer.parseInt(txfUnit.getText());
 
         if (unit <= 30) {
             charge = unit*35;
@@ -273,7 +392,7 @@ public class EBC extends JFrame implements ActionListener {
 
 
     public static  void  main    (String args []){
-        new EBC();
+        new test();
     }
 
 
